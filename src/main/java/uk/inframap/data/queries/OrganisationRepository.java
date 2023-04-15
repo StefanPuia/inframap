@@ -49,4 +49,26 @@ public class OrganisationRepository extends AbstractRepository {
                     parameters("orgId", organisationId.toString(), "typeName", type))
                 .list());
   }
+
+  public List<Record> findOrgInfraTags(final UUID organisationId) {
+    return read(
+        tx ->
+            tx.run(
+                    "MATCH (o:Organisation)-[:HAS_TAG]->(t:InfrastructureTag) where o.id = $orgId return t.name",
+                    parameters("orgId", organisationId.toString()))
+                .list());
+  }
+
+  public void createOrgInfraTag(final UUID organisationId, final String tag) {
+    write(
+        tx ->
+            tx.run(
+                    """
+                match (o:Organisation)
+                where o.id = $orgId
+                create (o)-[:HAS_TAG]->(t:InfrastructureTag { name: $tagName });
+                """,
+                    parameters("orgId", organisationId.toString(), "tagName", tag))
+                .list());
+  }
 }

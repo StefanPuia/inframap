@@ -9,24 +9,24 @@ import io.micronaut.http.annotation.Post;
 import java.util.List;
 import java.util.UUID;
 import uk.inframap.data.OrganisationDelegate;
-import uk.inframap.rest.dto.org.CreateTypeDto;
+import uk.inframap.rest.dto.org.CreateTagDto;
 
-@Controller("/org/{orgId}/type")
-public class TypeController {
+@Controller("/org/{orgId}/tag")
+public class TagController {
   private final OrganisationDelegate delegate;
 
-  public TypeController(final OrganisationDelegate delegate) {
+  public TagController(final OrganisationDelegate delegate) {
     this.delegate = delegate;
   }
 
   @Get
   public HttpResponse<List<String>> getAll(final @PathVariable("orgId") UUID organisationId) {
-    return HttpResponse.ok(delegate.findAllTypes(organisationId));
+    return HttpResponse.ok(delegate.findAllTags(organisationId));
   }
 
   @Post
   public HttpResponse<String> createType(
-      final @PathVariable("orgId") UUID organisationId, final @Body CreateTypeDto createTypeDto) {
-    return HttpResponse.ok(delegate.createOrganisationType(organisationId, createTypeDto.name()));
+      final @PathVariable("orgId") UUID organisationId, final @Body CreateTagDto createTagDto) {
+    return HttpResponse.ok(delegate.createOrganisationTag(organisationId, createTagDto.name()));
   }
 }

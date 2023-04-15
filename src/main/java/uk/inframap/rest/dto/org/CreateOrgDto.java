@@ -1,4 +1,4 @@
-package uk.inframap.rest.dto;
+package uk.inframap.rest.dto.org;
 
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.UUID;

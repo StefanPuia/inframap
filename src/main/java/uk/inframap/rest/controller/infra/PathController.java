@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Post;
 import uk.inframap.data.PathDelegate;
 import uk.inframap.model.infra.InfrastructureNodePath;
-import uk.inframap.rest.dto.PathDto;
+import uk.inframap.rest.dto.infra.PathDto;
 
 @Controller("/path")
 public class PathController {

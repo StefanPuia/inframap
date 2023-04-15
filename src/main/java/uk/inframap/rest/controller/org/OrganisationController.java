@@ -8,7 +8,7 @@ import io.micronaut.http.annotation.Post;
 import java.util.List;
 import uk.inframap.data.OrganisationDelegate;
 import uk.inframap.model.org.Organisation;
-import uk.inframap.rest.dto.CreateOrgDto;
+import uk.inframap.rest.dto.org.CreateOrgDto;
 
 @Controller("/org")
 public class OrganisationController {

@@ -11,7 +11,7 @@ import java.util.UUID;
 import uk.inframap.data.NodeDelegate;
 import uk.inframap.model.infra.Infrastructure;
 import uk.inframap.model.infra.InfrastructureNode;
-import uk.inframap.rest.dto.CreateNodeDto;
+import uk.inframap.rest.dto.infra.CreateNodeDto;
 
 @Controller("/node")
 public class NodeController {
