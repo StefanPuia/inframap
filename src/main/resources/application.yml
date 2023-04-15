@@ -1,0 +1,26 @@
+micronaut:
+  application:
+    name: inframap
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+  http:
+    client:
+      log-level: all
+  server:
+    cors:
+      enabled: true
+      configurations:
+        hoppscotch:
+          allowedOrigins:
+            - chrome-extension://amknoiejhlmhancpahfcfcfhllgkpbld
+netty:
+  default:
+    allocator:
+      max-order: 3
+neo4j:
+  uri: bolt://${NEO4J_HOST:localhost}
+  username: neo4j
+  password: password

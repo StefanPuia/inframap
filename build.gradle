@@ -1,0 +1,63 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.7.7"
+}
+
+version = "0.0.1"
+group = "uk.inframap"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.spring:micronaut-spring-annotation")
+    annotationProcessor("io.micronaut.spring:micronaut-spring-boot-annotation")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.data:micronaut-data-spring")
+    implementation("io.micronaut.data:micronaut-data-spring-jpa")
+    implementation("io.micronaut.neo4j:micronaut-neo4j-bolt")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("org.springframework:spring-orm")
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("io.micronaut.spring:micronaut-spring-boot")
+    testAnnotationProcessor("io.micronaut.spring:micronaut-spring-annotation")
+    testAnnotationProcessor("io.micronaut.spring:micronaut-spring-boot-annotation")
+    implementation("io.micronaut:micronaut-validation")
+
+    testRuntimeOnly("org.neo4j.test:neo4j-harness")
+
+}
+
+
+application {
+    mainClass.set("uk.inframap.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("uk.inframap.*")
+    }
+}
+
+
+
