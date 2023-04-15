@@ -13,6 +13,9 @@ micronaut:
     cors:
       enabled: true
       configurations:
+        local:
+          allowedOrigins:
+            - http://127.0.0.1:5173
         hoppscotch:
           allowedOrigins:
             - chrome-extension://amknoiejhlmhancpahfcfcfhllgkpbld

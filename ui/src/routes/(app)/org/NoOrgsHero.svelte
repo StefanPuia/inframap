@@ -7,7 +7,7 @@
         <div class="max-w-md">
             <h1 class="text-5xl font-bold">Welcome</h1>
             <p class="py-6">Start documenting your infrastructure now!</p>
-            <label for="my-modal-4" class="btn btn-primary">Create an organisation</label>
+            <label for="create-org-modal" class="btn btn-primary">Create an organisation</label>
         </div>
     </div>
 </div>
