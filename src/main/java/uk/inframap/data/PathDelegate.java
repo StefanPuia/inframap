@@ -4,16 +4,16 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.internal.value.PathValue;
-import uk.inframap.data.queries.Neo4jRepository;
-import uk.inframap.model.InfrastructureNodePath;
+import uk.inframap.data.queries.InfrastructureRepository;
+import uk.inframap.model.infra.InfrastructureNodePath;
 
 import static java.util.function.Predicate.not;
 
 @Singleton
 public class PathDelegate {
-  private final Neo4jRepository repository;
+  private final InfrastructureRepository repository;
 
-  public PathDelegate(final Neo4jRepository repository) {
+  public PathDelegate(final InfrastructureRepository repository) {
     this.repository = repository;
   }
 

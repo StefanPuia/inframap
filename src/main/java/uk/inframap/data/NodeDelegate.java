@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.UUID;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.internal.value.NodeValue;
-import uk.inframap.data.queries.Neo4jRepository;
-import uk.inframap.model.Infrastructure;
-import uk.inframap.model.InfrastructureNode;
+import uk.inframap.data.queries.InfrastructureRepository;
+import uk.inframap.model.infra.Infrastructure;
+import uk.inframap.model.infra.InfrastructureNode;
 
 import static uk.inframap.data.PathDelegate.pathsFromResults;
 
 @Singleton
 public class NodeDelegate {
-  private final Neo4jRepository repository;
+  private final InfrastructureRepository repository;
 
-  public NodeDelegate(final Neo4jRepository repository) {
+  public NodeDelegate(final InfrastructureRepository repository) {
     this.repository = repository;
   }
 

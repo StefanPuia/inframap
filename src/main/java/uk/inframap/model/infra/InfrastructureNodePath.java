@@ -1,4 +1,4 @@
-package uk.inframap.model;
+package uk.inframap.model.infra;
 
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.Arrays;

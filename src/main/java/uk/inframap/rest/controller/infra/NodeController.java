@@ -1,4 +1,4 @@
-package uk.inframap.rest.controller;
+package uk.inframap.rest.controller.infra;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
@@ -9,8 +9,8 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import java.util.UUID;
 import uk.inframap.data.NodeDelegate;
-import uk.inframap.model.Infrastructure;
-import uk.inframap.model.InfrastructureNode;
+import uk.inframap.model.infra.Infrastructure;
+import uk.inframap.model.infra.InfrastructureNode;
 import uk.inframap.rest.dto.CreateNodeDto;
 
 @Controller("/node")

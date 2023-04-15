@@ -2,7 +2,7 @@ package uk.inframap.rest.dto;
 
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.UUID;
-import uk.inframap.model.InfrastructureNodePath;
+import uk.inframap.model.infra.InfrastructureNodePath;
 
 @Serdeable
 public record PathDto(UUID from, UUID to) {
