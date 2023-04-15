@@ -1,4 +1,4 @@
-package uk.inframap.data.queries;
+package uk.inframap.data.repository;
 
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -23,9 +23,8 @@ public class OrganisationRepository extends AbstractRepository {
     write(
         tx ->
             tx.run(
-                    "CREATE (o:Organisation $properties) RETURN o",
-                    parameters("properties", organisation.toProps()))
-                .list());
+                "CREATE (o:Organisation $properties)",
+                parameters("properties", organisation.toProps())));
   }
 
   public List<Record> findOrgInfraTypes(final UUID organisationId) {
@@ -41,13 +40,12 @@ public class OrganisationRepository extends AbstractRepository {
     write(
         tx ->
             tx.run(
-                    """
+                """
                 match (o:Organisation)
                 where o.id = $orgId
                 create (o)-[:HAS_TYPE]->(t:InfrastructureType { name: $typeName });
                 """,
-                    parameters("orgId", organisationId.toString(), "typeName", type))
-                .list());
+                parameters("orgId", organisationId.toString(), "typeName", type)));
   }
 
   public List<Record> findOrgInfraTags(final UUID organisationId) {
@@ -63,12 +61,33 @@ public class OrganisationRepository extends AbstractRepository {
     write(
         tx ->
             tx.run(
-                    """
+                """
                 match (o:Organisation)
                 where o.id = $orgId
                 create (o)-[:HAS_TAG]->(t:InfrastructureTag { name: $tagName });
                 """,
-                    parameters("orgId", organisationId.toString(), "tagName", tag))
-                .list());
+                parameters("orgId", organisationId.toString(), "tagName", tag)));
+  }
+
+  public void deleteTag(final UUID organisationId, final String tagName) {
+    write(
+        tx ->
+            tx.run(
+                """
+                MATCH (o:Organisation)-[r]-(t:InfrastructureTag)
+                        WHERE o.id = $orgId AND t.name = $tagName
+                        DELETE r, t""",
+                parameters("orgId", organisationId.toString(), "tagName", tagName)));
+  }
+
+  public void deleteType(final UUID organisationId, final String typeName) {
+    write(
+        tx ->
+            tx.run(
+                """
+                MATCH (o:Organisation)-[r]-(t:InfrastructureType)
+                        WHERE o.id = $orgId AND t.name = $typeName
+                        DELETE r, t""",
+                parameters("orgId", organisationId.toString(), "typeName", typeName)));
   }
 }

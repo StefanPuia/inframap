@@ -19,12 +19,12 @@ public class PathController {
 
   @Post
   public HttpResponse<InfrastructureNodePath> createPath(final @Body PathDto createPath) {
-    return HttpResponse.ok(delegate.createPath(createPath.toPath()));
+    return HttpResponse.ok(delegate.createPath(createPath.toDomain()));
   }
 
   @Delete
   public HttpResponse<Void> deletePath(final @Body PathDto createPath) {
-    delegate.deletePath(createPath.toPath());
+    delegate.deletePath(createPath.toDomain());
     return HttpResponse.accepted();
   }
 }

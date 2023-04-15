@@ -6,7 +6,7 @@ import uk.inframap.model.infra.InfrastructureNodePath;
 
 @Serdeable
 public record PathDto(UUID from, UUID to) {
-  public InfrastructureNodePath toPath() {
+  public InfrastructureNodePath toDomain() {
     return new InfrastructureNodePath(from, to);
   }
 }

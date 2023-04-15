@@ -25,6 +25,6 @@ public class OrganisationController {
 
   @Post
   public HttpResponse<Organisation> create(final @Body CreateOrgDto createOrgDto) {
-    return HttpResponse.ok(delegate.createOrganisation(createOrgDto.toOrganisation()));
+    return HttpResponse.ok(delegate.createOrganisation(createOrgDto.toDomain()));
   }
 }

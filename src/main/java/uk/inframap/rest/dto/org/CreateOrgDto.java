@@ -7,7 +7,7 @@ import uk.inframap.model.org.Organisation;
 @Serdeable
 public record CreateOrgDto(String name) {
 
-  public Organisation toOrganisation() {
+  public Organisation toDomain() {
     return new Organisation(UUID.randomUUID(), name);
   }
 }

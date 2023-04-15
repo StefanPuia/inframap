@@ -34,7 +34,7 @@ public class NodeController {
 
   @Post
   public HttpResponse<InfrastructureNode> createNode(final @Body CreateNodeDto createNode) {
-    return HttpResponse.ok(delegate.create(createNode.toNode()));
+    return HttpResponse.ok(delegate.create(createNode.toDomain()));
   }
 
   @Delete("{uuid}")

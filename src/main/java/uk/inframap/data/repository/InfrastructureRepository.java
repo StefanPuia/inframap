@@ -1,4 +1,4 @@
-package uk.inframap.data.queries;
+package uk.inframap.data.repository;
 
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -35,54 +35,44 @@ public class InfrastructureRepository extends AbstractRepository {
   public void createNode(final InfrastructureNode node) {
     write(
         tx ->
-            tx.run("CREATE (n:Node $properties) RETURN n", parameters("properties", node.toProps()))
-                .list());
+            tx.run(
+                "CREATE (n:Node $properties) RETURN n", parameters("properties", node.toProps())));
   }
 
   public void deleteNode(final UUID nodeId) {
     write(
-        tx -> {
-          tx.run(
-              """
-                  MATCH (n:Node)-[r]-(:Node)
-                          WHERE n.uuid = $uuid
-                          DELETE r""",
-              parameters("uuid", nodeId.toString()));
-          return tx.run(
-                  """
-                      MATCH (n:Node)
-                              WHERE n.uuid = $uuid
-                              DELETE n""",
-                  parameters("uuid", nodeId.toString()))
-              .list();
-        });
+        tx ->
+            tx.run(
+                """
+                MATCH (n:Node)-[r]-()
+                        WHERE n.uuid = $uuid
+                        DELETE r, n""",
+                parameters("uuid", nodeId.toString())));
   }
 
   public void createPath(final InfrastructureNodePath path) {
     write(
         tx ->
             tx.run(
-                    """
+                """
                 MATCH
                   (a:Node),
                   (b:Node)
                   WHERE a.uuid = $fromUuid AND b.uuid = $toUuid
                 CREATE (a)-[r:CONNECTS]->(b)
                 RETURN type(r)""",
-                    parameters("fromUuid", path.from().toString(), "toUuid", path.to().toString()))
-                .list());
+                parameters("fromUuid", path.from().toString(), "toUuid", path.to().toString())));
   }
 
   public void deletePath(final InfrastructureNodePath path) {
     write(
         tx ->
             tx.run(
-                    """
+                """
                 MATCH
                   (a:Node)-[r]->(b:Node)
                   WHERE a.uuid = $fromUuid AND b.uuid = $toUuid
                 DELETE r""",
-                    parameters("fromUuid", path.from().toString(), "toUuid", path.to().toString()))
-                .list());
+                parameters("fromUuid", path.from().toString(), "toUuid", path.to().toString())));
   }
 }

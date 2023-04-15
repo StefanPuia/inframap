@@ -4,7 +4,7 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.internal.value.PathValue;
-import uk.inframap.data.queries.InfrastructureRepository;
+import uk.inframap.data.repository.InfrastructureRepository;
 import uk.inframap.model.infra.InfrastructureNodePath;
 
 import static java.util.function.Predicate.not;

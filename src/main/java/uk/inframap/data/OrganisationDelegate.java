@@ -3,7 +3,7 @@ package uk.inframap.data;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.UUID;
-import uk.inframap.data.queries.OrganisationRepository;
+import uk.inframap.data.repository.OrganisationRepository;
 import uk.inframap.model.org.Organisation;
 
 @Singleton
@@ -42,5 +42,13 @@ public class OrganisationDelegate {
   public String createOrganisationTag(final UUID organisationId, final String name) {
     repository.createOrgInfraTag(organisationId, name);
     return name;
+  }
+
+  public void deleteTag(final UUID organisationId, final String tagName) {
+    repository.deleteTag(organisationId, tagName);
+  }
+
+  public void deleteType(final UUID organisationId, final String typeName) {
+    repository.deleteType(organisationId, typeName);
   }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.internal.value.NodeValue;
-import uk.inframap.data.queries.InfrastructureRepository;
+import uk.inframap.data.repository.InfrastructureRepository;
 import uk.inframap.model.infra.Infrastructure;
 import uk.inframap.model.infra.InfrastructureNode;
 

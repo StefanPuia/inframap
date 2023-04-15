@@ -3,6 +3,7 @@ package uk.inframap.rest.controller.org;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
@@ -27,6 +28,13 @@ public class TagController {
   @Post
   public HttpResponse<String> createType(
       final @PathVariable("orgId") UUID organisationId, final @Body CreateTagDto createTagDto) {
-    return HttpResponse.ok(delegate.createOrganisationTag(organisationId, createTagDto.name()));
+    return HttpResponse.ok(delegate.createOrganisationTag(organisationId, createTagDto.toDomain()));
+  }
+
+  @Delete("/{tag}")
+  public HttpResponse<Void> deleteTag(
+      final @PathVariable("orgId") UUID organisationId, final @PathVariable("tag") String tagName) {
+    delegate.deleteTag(organisationId, tagName);
+    return HttpResponse.accepted();
   }
 }

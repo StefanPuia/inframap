@@ -1,4 +1,4 @@
-package uk.inframap.data.queries;
+package uk.inframap.data.repository;
 
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.TransactionWork;
