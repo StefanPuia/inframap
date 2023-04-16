@@ -6,14 +6,16 @@
   import {loading} from "../../store";
   import CreateOrgCard from "./org/CreateOrgCard.svelte";
   import {useQuery} from '@sveltestack/svelte-query';
+  import {whenSuccessful} from "../../utils/QueryUtils";
 
   let organisations: Organisation[] = [];
-  loading.set(true);
+  $loading = true;
 
-  useQuery<Organisation[]>('list-organisations', () => Api.get("org", {})).subscribe(({data}) => {
-    organisations = data as any;
-    loading.set(false);
-  });
+  useQuery<Organisation[]>('list-organisations', () => Api.get("org", {}))
+    .subscribe(whenSuccessful(data => {
+      organisations = data as any;
+      $loading = false
+    }));
 </script>
 
 {#if organisations?.length}

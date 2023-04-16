@@ -16,8 +16,16 @@ public class InfrastructureRepository extends AbstractRepository {
     super(driver);
   }
 
-  public List<Record> findAll() {
-    return read(tx -> tx.run("MATCH path=(n:Node)-[*0..]-(m:Node) RETURN distinct n, path").list());
+  public List<Record> findAllForOrg(final UUID orgId) {
+    return read(
+        tx ->
+            tx.run(
+                    """
+                        MATCH path = (o:Organisation)<-[:BELONGS_TO]-(n:Node)-[*0..]-(m:Node)
+                          WHERE o.id = $orgId
+                        RETURN DISTINCT n, path""",
+                    parameters("orgId", orgId.toString()))
+                .list());
   }
 
   public List<Record> findByProperty(final String property, final String value) {
@@ -32,11 +40,16 @@ public class InfrastructureRepository extends AbstractRepository {
                 .list());
   }
 
-  public void createNode(final InfrastructureNode node) {
+  public void createNode(final UUID orgId, final InfrastructureNode node) {
     write(
         tx ->
             tx.run(
-                "CREATE (n:Node $properties) RETURN n", parameters("properties", node.toProps())));
+                """
+                    MATCH (o:Organisation)
+                      WHERE o.id = $orgId
+                    CREATE (n:Node $properties)-[:BELONGS_TO]->(o)
+                    RETURN n""",
+                parameters("orgId", orgId.toString(), "properties", node.toProps())));
   }
 
   public void deleteNode(final UUID nodeId) {

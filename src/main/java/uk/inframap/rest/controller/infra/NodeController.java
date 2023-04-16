@@ -13,7 +13,7 @@ import uk.inframap.model.infra.Infrastructure;
 import uk.inframap.model.infra.InfrastructureNode;
 import uk.inframap.rest.dto.infra.CreateNodeDto;
 
-@Controller("/node")
+@Controller("/org/{orgId}/node")
 public class NodeController {
   private final NodeDelegate delegate;
 
@@ -22,23 +22,27 @@ public class NodeController {
   }
 
   @Get
-  public HttpResponse<Infrastructure> findAll() {
-    return HttpResponse.ok().body(delegate.findAll());
+  public HttpResponse<Infrastructure> findAll(final @PathVariable("orgId") UUID orgId) {
+    return HttpResponse.ok().body(delegate.findAllForOrg(orgId));
   }
 
   @Get("{tagName}/{value}")
   public HttpResponse<Infrastructure> findNodesByTag(
-      final @PathVariable("tagName") String tagName, final @PathVariable("value") String value) {
+      final @PathVariable("orgId") UUID orgId,
+      final @PathVariable("tagName") String tagName,
+      final @PathVariable("value") String value) {
     return HttpResponse.ok().body(delegate.findByTag(tagName, value));
   }
 
   @Post
-  public HttpResponse<InfrastructureNode> createNode(final @Body CreateNodeDto createNode) {
-    return HttpResponse.ok(delegate.create(createNode.toDomain()));
+  public HttpResponse<InfrastructureNode> createNode(
+      final @PathVariable("orgId") UUID orgId, final @Body CreateNodeDto createNode) {
+    return HttpResponse.ok(delegate.create(orgId, createNode.toDomain()));
   }
 
   @Delete("{uuid}")
-  public HttpResponse<Void> deleteNode(final @PathVariable("uuid") UUID nodeId) {
+  public HttpResponse<Void> deleteNode(
+      final @PathVariable("orgId") UUID orgId, final @PathVariable("uuid") UUID nodeId) {
     delegate.delete(nodeId);
     return HttpResponse.accepted();
   }

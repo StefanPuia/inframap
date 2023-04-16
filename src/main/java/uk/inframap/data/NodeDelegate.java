@@ -27,8 +27,8 @@ public class NodeDelegate {
         .toList();
   }
 
-  public Infrastructure findAll() {
-    final var results = repository.findAll();
+  public Infrastructure findAllForOrg(final UUID orgId) {
+    final var results = repository.findAllForOrg(orgId);
     return new Infrastructure(nodesFromResults(results), pathsFromResults(results));
   }
 
@@ -37,8 +37,8 @@ public class NodeDelegate {
     return new Infrastructure(nodesFromResults(results), pathsFromResults(results));
   }
 
-  public InfrastructureNode create(final InfrastructureNode createNode) {
-    repository.createNode(createNode);
+  public InfrastructureNode create(final UUID orgId, final InfrastructureNode createNode) {
+    repository.createNode(orgId, createNode);
     return createNode;
   }
 

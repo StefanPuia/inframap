@@ -20,7 +20,7 @@ public class PathDelegate {
   static List<InfrastructureNodePath> pathsFromResults(final List<Record> results) {
     return results.stream()
         .map(r -> (PathValue) r.get(1))
-        .filter(path -> path.asPath().length() > 0)
+        .filter(path -> path.asPath().length() > 1)
         .map(InfrastructureNodePath::from)
         .filter(not(InfrastructureNodePath::isSelf))
         .distinct()
