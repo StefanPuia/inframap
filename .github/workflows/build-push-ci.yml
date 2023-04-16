@@ -20,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       dockerImage: europe-west1-docker.pkg.dev/personalweb-279207/stefanpuia/inframap
+    permissions:
+      checks: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
