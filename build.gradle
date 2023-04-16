@@ -1,6 +1,6 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "3.7.8"
+    id 'com.github.johnrengelman.shadow' version "8.1.1"
+    id 'io.micronaut.application' version "3.7.8"
 }
 
 version = "0.0.1"
@@ -59,5 +59,10 @@ micronaut {
     }
 }
 
+tasks.named("dockerfile") {
+    baseImage = 'openjdk:17-alpine'
+}
 
-
+tasks.named("dockerBuild") {
+    images = ["${System.env.DOCKER_IMAGE_TAG}", "${System.env.DOCKER_IMAGE_TAG}:${System.env.BUILD_ID}"]
+}
