@@ -28,15 +28,15 @@ public class InfrastructureRepository extends AbstractRepository {
                 .list());
   }
 
-  public List<Record> findByProperty(final String property, final String value) {
+  public List<Record> findByProperty(final UUID orgId, final String property, final String value) {
     return read(
         tx ->
             tx.run(
                     """
-                MATCH path = (n:Node)-[*0..]-(m:Node)
-                  WHERE $value IN [n[$propName], m[$propName]]
+                MATCH path = (o:Organisation)<-[:BELONGS_TO]-(n:Node)-[*0..]-(m:Node)
+                  WHERE o.id = $orgId AND $value IN [n[$propName], m[$propName]]
                 RETURN DISTINCT n, path""",
-                    parameters("propName", property, "value", value))
+                    parameters("orgId", orgId.toString(), "propName", property, "value", value))
                 .list());
   }
 
@@ -52,15 +52,15 @@ public class InfrastructureRepository extends AbstractRepository {
                 parameters("orgId", orgId.toString(), "properties", node.toProps())));
   }
 
-  public void deleteNode(final UUID nodeId) {
+  public void deleteNode(final UUID orgId, final UUID nodeId) {
     write(
         tx ->
             tx.run(
                 """
-                MATCH (n:Node)-[r]-()
-                        WHERE n.uuid = $uuid
-                        DELETE r, n""",
-                parameters("uuid", nodeId.toString())));
+                MATCH (o:Organisation)<-[b:BELONGS_TO]-(n:Node)-[r]-()
+                        WHERE o.id = $orgId AND n.uuid = $uuid
+                        DELETE b, r, n""",
+                parameters("orgId", orgId.toString(), "uuid", nodeId.toString())));
   }
 
   public void createPath(final InfrastructureNodePath path) {

@@ -2,18 +2,18 @@
   import NoOrgsHero from "./org/NoOrgsHero.svelte";
   import type {Organisation} from "../../types.js";
   import OrgCard from "./org/OrgCard.svelte";
-  import Api from "../../services/Api";
   import {loading} from "../../store";
   import CreateOrgCard from "./org/CreateOrgCard.svelte";
   import {useQuery} from '@sveltestack/svelte-query';
   import {whenSuccessful} from "../../utils/QueryUtils";
+  import {getOrganisations} from "../../services/axios";
 
   let organisations: Organisation[] = [];
   $loading = true;
 
-  useQuery<Organisation[]>('list-organisations', () => Api.get("org", {}))
-    .subscribe(whenSuccessful(data => {
-      organisations = data as any;
+  useQuery('list-organisations', () => getOrganisations())
+    .subscribe(whenSuccessful(({data}) => {
+      organisations = data;
       $loading = false
     }));
 </script>

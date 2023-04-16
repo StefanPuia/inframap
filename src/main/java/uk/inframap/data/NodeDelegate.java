@@ -32,8 +32,8 @@ public class NodeDelegate {
     return new Infrastructure(nodesFromResults(results), pathsFromResults(results));
   }
 
-  public Infrastructure findByTag(final String tag, final String value) {
-    final var results = repository.findByProperty(tag, value);
+  public Infrastructure findByTag(final UUID orgId, final String tag, final String value) {
+    final var results = repository.findByProperty(orgId,tag, value);
     return new Infrastructure(nodesFromResults(results), pathsFromResults(results));
   }
 
@@ -42,7 +42,7 @@ public class NodeDelegate {
     return createNode;
   }
 
-  public void delete(final UUID nodeId) {
-    repository.deleteNode(nodeId);
+  public void delete(final UUID orgId, final UUID nodeId) {
+    repository.deleteNode(orgId, nodeId);
   }
 }

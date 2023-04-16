@@ -31,7 +31,7 @@ public class NodeController {
       final @PathVariable("orgId") UUID orgId,
       final @PathVariable("tagName") String tagName,
       final @PathVariable("value") String value) {
-    return HttpResponse.ok().body(delegate.findByTag(tagName, value));
+    return HttpResponse.ok().body(delegate.findByTag(orgId, tagName, value));
   }
 
   @Post
@@ -43,7 +43,7 @@ public class NodeController {
   @Delete("{uuid}")
   public HttpResponse<Void> deleteNode(
       final @PathVariable("orgId") UUID orgId, final @PathVariable("uuid") UUID nodeId) {
-    delegate.delete(nodeId);
+    delegate.delete(orgId, nodeId);
     return HttpResponse.accepted();
   }
 }

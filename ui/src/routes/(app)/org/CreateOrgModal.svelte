@@ -1,8 +1,8 @@
 <script lang="ts">
-  import API from "../../../services/Api";
   import {loading} from "../../../store";
   import {useQueryClient} from "@sveltestack/svelte-query";
   import Modal from "../../../compoents/Modal/Modal.svelte";
+  import {createOrganisation} from "../../../services/axios";
 
   let formInputName;
   let formInputImage;
@@ -12,7 +12,7 @@
   const handleSubmit = async () => {
     try {
       loading.set(true);
-      await API.post("org", {name: formInputName, image: formInputImage, description: formInputDescription});
+      await createOrganisation({name: formInputName, image: formInputImage, description: formInputDescription});
       await queryClient.invalidateQueries('list-organisations');
       document.querySelector("#create-org-modal").checked = false;
     } catch (e) {
