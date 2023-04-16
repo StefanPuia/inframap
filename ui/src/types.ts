@@ -21,8 +21,8 @@ export type InfrastructureNode = {
 }
 
 export type InfrastructureNodePath = {
-  from: string;
-  to: string;
+  source: string;
+  target: string;
 }
 
 export type Infrastructure = {

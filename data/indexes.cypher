@@ -1,4 +1,4 @@
-CREATE INDEX node_uuid IF NOT EXISTS FOR (n:Node) ON (n.uuid);
+CREATE INDEX node_id IF NOT EXISTS FOR (n:Node) ON (n.id);
 
 CREATE INDEX node_name IF NOT EXISTS FOR (n:Node) ON (n.name);
 

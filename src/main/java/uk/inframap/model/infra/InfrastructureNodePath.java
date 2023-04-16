@@ -8,8 +8,10 @@ import java.util.UUID;
 import org.neo4j.driver.internal.value.PathValue;
 import org.neo4j.driver.types.Node;
 
+import static uk.inframap.model.infra.InfrastructureNode.KEY_ID;
+
 @Serdeable
-public record InfrastructureNodePath(UUID from, UUID to) {
+public record InfrastructureNodePath(UUID source, UUID target) {
 
   public static InfrastructureNodePath from(final PathValue path) {
     final List<Node> nodes =
@@ -17,12 +19,12 @@ public record InfrastructureNodePath(UUID from, UUID to) {
             .stream()
                 .filter(node -> ((AbstractList<String>) node.labels()).contains("Node"))
                 .toList();
-    if (nodes.size() != 2) {
+    if (nodes.size() < 2) {
       throw new IllegalStateException();
     }
     return new InfrastructureNodePath(
-        UUID.fromString((String) nodes.get(0).asMap().get("uuid")),
-        UUID.fromString((String) nodes.get(1).asMap().get("uuid")));
+        UUID.fromString((String) nodes.get(0).asMap().get(KEY_ID)),
+        UUID.fromString((String) nodes.get(1).asMap().get(KEY_ID)));
   }
 
   @Override
@@ -35,12 +37,12 @@ public record InfrastructureNodePath(UUID from, UUID to) {
 
   @Override
   public int hashCode() {
-    final int[] codes = {from.hashCode(), to.hashCode()};
+    final int[] codes = {source.hashCode(), target.hashCode()};
     Arrays.sort(codes);
     return Arrays.hashCode(codes);
   }
 
   public boolean isSelf() {
-    return from.equals(to);
+    return source.equals(target);
   }
 }

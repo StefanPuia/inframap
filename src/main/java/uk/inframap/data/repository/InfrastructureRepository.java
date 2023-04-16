@@ -58,9 +58,9 @@ public class InfrastructureRepository extends AbstractRepository {
             tx.run(
                 """
                 MATCH (o:Organisation)<-[b:BELONGS_TO]-(n:Node)-[r]-()
-                        WHERE o.id = $orgId AND n.uuid = $uuid
+                        WHERE o.id = $orgId AND n.id = $nodeId
                         DELETE b, r, n""",
-                parameters("orgId", orgId.toString(), "uuid", nodeId.toString())));
+                parameters("orgId", orgId.toString(), "nodeId", nodeId.toString())));
   }
 
   public void createPath(final InfrastructureNodePath path) {
@@ -71,10 +71,10 @@ public class InfrastructureRepository extends AbstractRepository {
                 MATCH
                   (a:Node),
                   (b:Node)
-                  WHERE a.uuid = $fromUuid AND b.uuid = $toUuid
+                  WHERE a.id = $fromId AND b.id = $toId
                 CREATE (a)-[r:CONNECTS]->(b)
                 RETURN type(r)""",
-                parameters("fromUuid", path.from().toString(), "toUuid", path.to().toString())));
+                parameters("fromId", path.source().toString(), "toId", path.target().toString())));
   }
 
   public void deletePath(final InfrastructureNodePath path) {
@@ -84,8 +84,8 @@ public class InfrastructureRepository extends AbstractRepository {
                 """
                 MATCH
                   (a:Node)-[r]->(b:Node)
-                  WHERE a.uuid = $fromUuid AND b.uuid = $toUuid
+                  WHERE a.id = $fromId AND b.id = $toId
                 DELETE r""",
-                parameters("fromUuid", path.from().toString(), "toUuid", path.to().toString())));
+                parameters("fromId", path.source().toString(), "toId", path.target().toString())));
   }
 }

@@ -5,8 +5,8 @@ import java.util.UUID;
 import uk.inframap.model.infra.InfrastructureNodePath;
 
 @Serdeable
-public record PathDto(UUID from, UUID to) {
+public record PathDto(UUID source, UUID target) {
   public InfrastructureNodePath toDomain() {
-    return new InfrastructureNodePath(from, to);
+    return new InfrastructureNodePath(source, target);
   }
 }
