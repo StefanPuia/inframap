@@ -13,22 +13,22 @@ type NodeInit = { nodes: InfrastructureNode[], links: Link[] };
 export function ForceGraph({nodes, links}: NodeInit, _: any) {
   const imageSize = 64;
 
-  const width = 960,
-    height = 500
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   const svg = d3.create("svg")
     .attr("class", "fixed w-full h-full")
-    .attr("viewBox", `0 0 ${window.innerWidth} ${window.innerHeight}`);
+    .attr("viewBox", `0 0 ${width} ${height}`);
 
   const container = svg.append("g");
 
 
   const simulation = d3.forceSimulation()
     .nodes(nodes as any)
-    .force("charge", d3.forceManyBody().strength(-100))
+    .force("charge", d3.forceManyBody().strength(-1000))
     .force("link", d3.forceLink(links).id((d: any) => d.id).distance(imageSize * 3))
     .force("center", d3.forceCenter(width / 2, height / 2))
-    .tick(300)
+    .tick(1)
     .on("tick", ticked);
 
 
@@ -42,7 +42,7 @@ export function ForceGraph({nodes, links}: NodeInit, _: any) {
     .data(nodes)
     .enter()
     .append("g")
-  // .call(drag(simulation));
+    .call(drag(simulation));
 
   node.append("image")
     .attr("xlink:href", function (d) {
@@ -83,35 +83,36 @@ export function ForceGraph({nodes, links}: NodeInit, _: any) {
     });
   }
 
-  // function drag(simulation: any) {
-  //   function dragstarted(event: any) {
-  //     if (!event.active) simulation.alphaTarget(0.3).restart();
-  //     event.subject.fx = event.subject.x;
-  //     event.subject.fy = event.subject.y;
-  //   }
-  //
-  //   function dragged(event: any) {
-  //     event.subject.fx = event.x;
-  //     event.subject.fy = event.y;
-  //   }
-  //
-  //   function dragended(event: any) {
-  //     if (!event.active) simulation.alphaTarget(0);
-  //     event.subject.fx = null;
-  //     event.subject.fy = null;
-  //   }
-  //
-  //   return d3.drag()
-  //     .on("start", dragstarted)
-  //     .on("drag", dragged)
-  //     .on("end", dragended);
-  // }
+  function drag(simulation: any) {
+    function dragstarted(event: any) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      event.subject.fx = event.subject.x;
+      event.subject.fy = event.subject.y;
+    }
 
-  let zoom = d3.zoom().on('zoom', handleZoom);
-  function handleZoom(e: any) {
-    container
-      .attr('transform', e.transform);
+    function dragged(event: any) {
+      event.subject.fx = event.x;
+      event.subject.fy = event.y;
+    }
+
+    function dragended(event: any) {
+      if (!event.active) simulation.alphaTarget(0);
+      event.subject.fx = null;
+      event.subject.fy = null;
+    }
+
+    return d3.drag()
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended);
   }
+
+  const zoom = d3.zoom().on('zoom', (e) => {
+    if (e.sourceEvent && e.sourceEvent.altKey) {
+      container
+        .attr('transform', e.transform);
+    }
+  });
   svg.call(zoom as any);
   return svg.node();
 }
