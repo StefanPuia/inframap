@@ -3,6 +3,7 @@ package uk.inframap.data;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.UUID;
+import org.neo4j.driver.internal.value.NodeValue;
 import uk.inframap.data.repository.OrganisationRepository;
 import uk.inframap.model.org.Organisation;
 
@@ -50,5 +51,9 @@ public class OrganisationDelegate {
 
   public void deleteType(final UUID organisationId, final String typeName) {
     repository.deleteType(organisationId, typeName);
+  }
+
+  public Organisation find(final UUID orgId) {
+    return Organisation.from((NodeValue) repository.findById(orgId).get(0));
   }
 }

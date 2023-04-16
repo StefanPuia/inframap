@@ -31,7 +31,11 @@ public class OrganisationRepository extends AbstractRepository {
     return read(
         tx ->
             tx.run(
-                    "MATCH (o:Organisation)-[:HAS_TYPE]->(t:InfrastructureType) where o.id = $orgId return t.name",
+                    """
+                        MATCH (o:Organisation)-[:HAS_TYPE]->(t:InfrastructureType)
+                          WHERE o.id = $orgId
+                        RETURN t.name
+                        ORDER BY t.name asc""",
                     parameters("orgId", organisationId.toString()))
                 .list());
   }
@@ -52,7 +56,11 @@ public class OrganisationRepository extends AbstractRepository {
     return read(
         tx ->
             tx.run(
-                    "MATCH (o:Organisation)-[:HAS_TAG]->(t:InfrastructureTag) where o.id = $orgId return t.name",
+                    """
+                        MATCH (o:Organisation)-[:HAS_TAG]->(t:InfrastructureTag)
+                          WHERE o.id = $orgId
+                        RETURN t.name
+                        ORDER BY t.name asc""",
                     parameters("orgId", organisationId.toString()))
                 .list());
   }
@@ -89,5 +97,14 @@ public class OrganisationRepository extends AbstractRepository {
                         WHERE o.id = $orgId AND t.name = $typeName
                         DELETE r, t""",
                 parameters("orgId", organisationId.toString(), "typeName", typeName)));
+  }
+
+  public Record findById(final UUID orgId) {
+    return read(
+        tx ->
+            tx.run(
+                    "MATCH (o:Organisation) where o.id = $orgId return o",
+                    parameters("orgId", orgId.toString()))
+                .next());
   }
 }

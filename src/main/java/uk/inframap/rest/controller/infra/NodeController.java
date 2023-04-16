@@ -8,6 +8,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import java.util.UUID;
+import javax.validation.Valid;
 import uk.inframap.data.NodeDelegate;
 import uk.inframap.model.infra.Infrastructure;
 import uk.inframap.model.infra.InfrastructureNode;
@@ -36,7 +37,7 @@ public class NodeController {
 
   @Post
   public HttpResponse<InfrastructureNode> createNode(
-      final @PathVariable("orgId") UUID orgId, final @Body CreateNodeDto createNode) {
+      final @PathVariable("orgId") UUID orgId, final @Valid @Body CreateNodeDto createNode) {
     return HttpResponse.ok(delegate.create(orgId, createNode.toDomain()));
   }
 

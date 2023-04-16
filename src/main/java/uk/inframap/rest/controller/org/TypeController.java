@@ -9,6 +9,7 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import java.util.List;
 import java.util.UUID;
+import javax.validation.Valid;
 import uk.inframap.data.OrganisationDelegate;
 import uk.inframap.rest.dto.org.CreateTypeDto;
 
@@ -27,7 +28,7 @@ public class TypeController {
 
   @Post
   public HttpResponse<String> createType(
-      final @PathVariable("orgId") UUID organisationId, final @Body CreateTypeDto createTypeDto) {
+      final @PathVariable("orgId") UUID organisationId, final @Valid @Body CreateTypeDto createTypeDto) {
     return HttpResponse.ok(
         delegate.createOrganisationType(organisationId, createTypeDto.toDomain()));
   }

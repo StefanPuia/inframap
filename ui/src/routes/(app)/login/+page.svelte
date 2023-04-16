@@ -1,6 +1,8 @@
 <script lang="ts">
   import {userSession} from '../../../store';
   import {goto} from '$app/navigation';
+  import MicrosoftIcon from "../../../compoents/Icon/MicrosoftIcon.svelte";
+  import GoogleIcon from "../../../compoents/Icon/GoogleIcon.svelte";
 
   userSession.subscribe((value) => {
     if (value) {
@@ -21,11 +23,11 @@
                 </p>
                 <div class="card-actions justify-end">
                     <button class="btn gap-2" on:click={() => userSession.set({ token: '' })}>
-                        <img src="/icons/google.svg" alt="google icon"/>
+                        <GoogleIcon/>
                         Sign in with Google
                     </button>
                     <button class="btn gap-2">
-                        <img src="/icons/microsoft.svg" alt="microsoft icon"/>
+                        <MicrosoftIcon/>
                         Sign in with Microsoft
                     </button>
                 </div>

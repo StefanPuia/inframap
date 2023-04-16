@@ -1,4 +1,4 @@
-import type {Infrastructure, Organisation} from "../types";
+import type {Infrastructure, InfrastructureNode, Organisation} from "../types";
 
 // [GET] /org
 export type getOrganisationsResponse = Organisation[];
@@ -11,5 +11,20 @@ export type createOrganisationRequest = {
 }
 export type createOrganisationResponse = Organisation;
 
+// [GET] /org/{orgId}
+export type getOrganisationResponse = {
+  organisation: Organisation;
+  types: string[];
+  tags: string[];
+};
+
 // [GET] /org/{orgId}/node
-export type getInfrastructureResponse =Infrastructure;
+export type getInfrastructureResponse = Infrastructure;
+
+// [POST] /org/{orgId}/node
+export type createNodeRequest = {
+  name: string;
+  type: string;
+  tags: Record<string, any>;
+}
+export type createNodeResponse = InfrastructureNode;

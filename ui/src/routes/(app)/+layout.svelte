@@ -11,4 +11,5 @@
         <Stretch size="60" color="hsl(var(--p))"/>
     </div>
 {/if}
+
 <slot/>

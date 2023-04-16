@@ -12,9 +12,9 @@
   const handleSubmit = async () => {
     try {
       loading.set(true);
+      document.querySelector("#create-org-modal").checked = false;
       await createOrganisation({name: formInputName, image: formInputImage, description: formInputDescription});
       await queryClient.invalidateQueries('list-organisations');
-      document.querySelector("#create-org-modal").checked = false;
     } catch (e) {
       alert(e);
     }

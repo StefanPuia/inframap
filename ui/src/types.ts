@@ -5,6 +5,14 @@ export type Organisation = {
   description?: string
 }
 
+export type OrganisationTypes = {
+  types: string[]
+}
+
+export type OrganisationTags = {
+  tags: string[]
+}
+
 export type InfrastructureNode = {
   id: string;
   name: string;

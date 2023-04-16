@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import java.util.UUID;
+import javax.validation.Valid;
 import uk.inframap.data.UserDelegate;
 import uk.inframap.rest.dto.user.CreateUserDto;
 
@@ -19,7 +20,7 @@ public class UserController {
   }
 
   @Post
-  public HttpResponse<Void> createUser(final @Body CreateUserDto createUserDto) {
+  public HttpResponse<Void> createUser(final @Valid @Body CreateUserDto createUserDto) {
     delegate.createUser(createUserDto.toDomain());
     return HttpResponse.ok();
   }

@@ -1,12 +1,19 @@
 <script lang="ts">
   import '../app.css';
   import {QueryClient, QueryClientProvider} from '@sveltestack/svelte-query';
-  import {userSession} from '../store';
+  import {currentOrganisation, userSession} from '../store';
   import {goto} from '$app/navigation';
   import {onMount} from 'svelte'
   import {themeChange} from 'theme-change'
 
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      }
+    }
+  })
 
   onMount(() => {
     themeChange(false)
@@ -20,7 +27,7 @@
 </script>
 
 <svelte:head>
-    <title>InfraMap</title>
+    {#if $currentOrganisation}<title>InfraMap - {$currentOrganisation.name}</title>{:else}<title>InfraMap</title>{/if}
 </svelte:head>
 
 
