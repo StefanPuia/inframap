@@ -25,7 +25,7 @@ export function ForceGraph({nodes, links}: NodeInit, _: any) {
 
   const simulation = d3.forceSimulation()
     .nodes(nodes as any)
-    .force("charge", d3.forceManyBody().strength(-1000))
+    .force("charge", d3.forceManyBody().strength(-200))
     .force("link", d3.forceLink(links).id((d: any) => d.id).distance(imageSize * 3))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .tick(1)
@@ -42,7 +42,7 @@ export function ForceGraph({nodes, links}: NodeInit, _: any) {
     .data(nodes)
     .enter()
     .append("g")
-    .call(drag(simulation));
+    .call(drag(simulation) as any);
 
   node.append("image")
     .attr("xlink:href", function (d) {
@@ -108,10 +108,8 @@ export function ForceGraph({nodes, links}: NodeInit, _: any) {
   }
 
   const zoom = d3.zoom().on('zoom', (e) => {
-    if (e.sourceEvent && e.sourceEvent.altKey) {
-      container
-        .attr('transform', e.transform);
-    }
+    container
+      .attr('transform', e.transform);
   });
   svg.call(zoom as any);
   return svg.node();
