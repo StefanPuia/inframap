@@ -11,14 +11,14 @@
     <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl" href="/">InfraMap</a>
         {#if $currentOrganisation}
-            <h1 class="px-2">{$currentOrganisation.name}</h1>
+            <a class="btn btn-ghost normal-case px-2 text-xl text-primary-content" href="/org/{$currentOrganisation.id}"><h2>{$currentOrganisation.name}</h2></a>
         {/if}
     </div>
     <div class="flex-none">
         {#if $currentOrganisation}
-            <button class="btn btn-circle btn-ghost">
+            <a class="btn btn-circle btn-ghost" href="/org/{$currentOrganisation.id}/settings">
                 <GearIcon/>
-            </button>
+            </a>
         {/if}
         <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar">
