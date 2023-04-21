@@ -8,9 +8,9 @@ import type {InfrastructureNode} from "../types";
 
 type Link = { source: string, target: string };
 type NodeInit = { nodes: InfrastructureNode[], links: Link[] };
+type Options = { types: Record<string, string> }
 
-
-export function ForceGraph({nodes, links}: NodeInit, _: any) {
+export function ForceGraph({nodes, links}: NodeInit, {types}: Options) {
   const imageSize = 64;
 
   const width = window.innerWidth;
@@ -25,30 +25,33 @@ export function ForceGraph({nodes, links}: NodeInit, _: any) {
 
   const simulation = d3.forceSimulation()
     .nodes(nodes as any)
-    .force("charge", d3.forceManyBody().strength(-200))
+    .force("charge", d3.forceManyBody().strength(-50))
     .force("link", d3.forceLink(links).id((d: any) => d.id).distance(imageSize * 3))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .tick(1)
     .on("tick", ticked);
 
 
-  var link = container.selectAll(".link")
+  const link = container.selectAll(".link")
     .data(links)
     .enter()
     .append("line")
     .attr("stroke", "#999");
 
-  var node = container.selectAll(".node")
+  const node = container.selectAll(".node")
     .data(nodes)
     .enter()
     .append("g")
     .call(drag(simulation) as any);
 
-  node.append("image")
+  node.append("title").text(function (d) {
+    return `Type '${d.type}' not found`
+  });
+
+  node
+    .append("image")
     .attr("xlink:href", function (d) {
-      var rnd = Math.floor(Math.random() * 64 + 1);
-      return "http://www.bigbiz.com/bigbiz/icons/ultimate/Comic/Comic"
-        + rnd.toString() + ".gif";
+      return types[d.type] ?? "https://code.benco.io/icon-collection/azure-icons/Alerts.svg";
     })
     .attr("x", -imageSize / 2)
     .attr("y", -imageSize / 2)

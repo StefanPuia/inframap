@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.Record;
+import uk.inframap.model.org.InfrastructureType;
 import uk.inframap.model.org.Organisation;
 
 import static org.neo4j.driver.Values.parameters;
@@ -34,22 +35,22 @@ public class OrganisationRepository extends AbstractRepository {
                     """
                         MATCH (o:Organisation)-[:HAS_TYPE]->(t:InfrastructureType)
                           WHERE o.id = $orgId
-                        RETURN t.name
+                        RETURN t
                         ORDER BY t.name asc""",
                     parameters("orgId", organisationId.toString()))
                 .list());
   }
 
-  public void createOrgInfraType(final UUID organisationId, final String type) {
+  public void createOrgInfraType(final UUID organisationId, final InfrastructureType type) {
     write(
         tx ->
             tx.run(
                 """
                 match (o:Organisation)
                 where o.id = $orgId
-                create (o)-[:HAS_TYPE]->(t:InfrastructureType { name: $typeName });
+                create (o)-[:HAS_TYPE]->(t:InfrastructureType $properties);
                 """,
-                parameters("orgId", organisationId.toString(), "typeName", type)));
+                parameters("orgId", organisationId.toString(), "properties", type.toProps())));
   }
 
   public List<Record> findOrgInfraTags(final UUID organisationId) {

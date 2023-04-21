@@ -2,11 +2,11 @@ create (o:Organisation { id: 'c17ee878-d628-43e6-9935-800f0d668952', name: 'My o
 
 MATCH (o:Organisation)
   WHERE o.id = 'c17ee878-d628-43e6-9935-800f0d668952'
-CREATE(o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Router'}),
-      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Load Balancer'}),
-      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'App Service'}),
-      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Virtual Machine'}),
-      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Server'});
+CREATE(o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Router', image: 'https://code.benco.io/icon-collection/azure-icons/Virtual-Network-Gateways.svg'}),
+      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Load Balancer', image: 'https://code.benco.io/icon-collection/azure-icons/Load-Balancers.svg'}),
+      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'App Service', image: 'https://code.benco.io/icon-collection/azure-icons/App-Services.svg'}),
+      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Virtual Machine', image: 'https://code.benco.io/icon-collection/azure-icons/Virtual-Machine.svg'}),
+      (o)-[:HAS_TYPE]->(:InfrastructureType {name: 'Server', image: 'https://code.benco.io/icon-collection/azure-icons/App-Service-Plans.svg'});
 
 MATCH (o:Organisation)
   WHERE o.id = 'c17ee878-d628-43e6-9935-800f0d668952'

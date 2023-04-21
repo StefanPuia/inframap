@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import uk.inframap.data.OrganisationDelegate;
+import uk.inframap.model.org.InfrastructureType;
 import uk.inframap.rest.dto.org.CreateTypeDto;
 
 @Controller("/org/{orgId}/type")
@@ -22,12 +23,12 @@ public class TypeController {
   }
 
   @Get
-  public HttpResponse<List<String>> getAll(final @PathVariable("orgId") UUID organisationId) {
+  public HttpResponse<List<InfrastructureType>> getAll(final @PathVariable("orgId") UUID organisationId) {
     return HttpResponse.ok(delegate.findAllTypes(organisationId));
   }
 
   @Post
-  public HttpResponse<String> createType(
+  public HttpResponse<InfrastructureType> createType(
       final @PathVariable("orgId") UUID organisationId, final @Valid @Body CreateTypeDto createTypeDto) {
     return HttpResponse.ok(
         delegate.createOrganisationType(organisationId, createTypeDto.toDomain()));

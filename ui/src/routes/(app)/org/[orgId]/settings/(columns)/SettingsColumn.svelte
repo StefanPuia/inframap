@@ -11,12 +11,6 @@
     <table class="table w-full static">
         <tbody>
         <slot/>
-        <tr>
-            <td colspan="{colspan}">
-                <input type="text" placeholder="{placeholder}" class="input input-bordered w-full"
-                       on:keypress={onKeyPress}/>
-            </td>
-        </tr>
         </tbody>
     </table>
 </div>

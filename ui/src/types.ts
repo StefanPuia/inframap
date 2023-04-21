@@ -5,8 +5,13 @@ export type Organisation = {
   description?: string
 }
 
+export type InfrastructureType = {
+  name: string;
+  image: string;
+}
+
 export type OrganisationTypes = {
-  types: string[]
+  types: InfrastructureType[]
 }
 
 export type OrganisationTags = {

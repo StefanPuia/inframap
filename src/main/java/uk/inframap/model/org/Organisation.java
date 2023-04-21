@@ -1,7 +1,6 @@
 package uk.inframap.model.org;
 
 import io.micronaut.serde.annotation.Serdeable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import org.neo4j.driver.internal.value.NodeValue;
@@ -19,9 +18,6 @@ public record Organisation(UUID id, String name) {
   }
 
   public Map<String, Object> toProps() {
-    final Map<String, Object> map = new HashMap<>();
-    map.put(KEY_ID, id.toString());
-    map.put(KEY_NAME, name);
-    return map;
+    return Map.of(KEY_ID, id.toString(), KEY_NAME, name);
   }
 }

@@ -4,7 +4,7 @@ import type {
   createNodeRequest,
   createNodeResponse,
   createOrganisationRequest,
-  createOrganisationResponse,
+  createOrganisationResponse, createTypeRequest,
   getInfrastructureResponse,
   getOrganisationResponse,
   getOrganisationsResponse
@@ -38,7 +38,7 @@ export const getOrganisation = (orgId: string) => service.get<getOrganisationRes
 export const createOrganisation = (data: createOrganisationRequest) => service.post<createOrganisationResponse>('/org', data);
 export const getInfrastructure = (orgId: string) => service.get<getInfrastructureResponse>(`/org/${orgId}/node`);
 export const createNode = (orgId: string, data: createNodeRequest) => service.post<createNodeResponse>(`/org/${orgId}/node`, data);
-export const createType = (orgId: string, type: string) => service.post(`/org/${orgId}/type`, {name: type});
+export const createType = (orgId: string, data: createTypeRequest) => service.post(`/org/${orgId}/type`, data);
 export const deleteType = (orgId: string, type: string) => service.delete(`/org/${orgId}/type/${e(type)}`);
 export const createTag = (orgId: string, tag: string) => service.post(`/org/${orgId}/tag`, {name: tag});
 export const deleteTag = (orgId: string, tag: string) => service.delete(`/org/${orgId}/tag/${e(tag)}`);

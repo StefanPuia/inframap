@@ -39,7 +39,7 @@
             <select class="select w-full input-bordered" bind:value={formInputType}>
                 <option disabled selected value="">Type</option>
                 {#each $currentOrganisation?.types ?? [] as type}
-                    <option>{type}</option>
+                    <option>{type.name}</option>
                 {/each}
             </select>
         </div>

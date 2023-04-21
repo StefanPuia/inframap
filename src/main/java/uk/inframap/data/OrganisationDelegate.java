@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import org.neo4j.driver.internal.value.NodeValue;
 import uk.inframap.data.repository.OrganisationRepository;
+import uk.inframap.model.org.InfrastructureType;
 import uk.inframap.model.org.Organisation;
 
 @Singleton
@@ -27,11 +28,11 @@ public class OrganisationDelegate {
     return recordMapper.mapValues(repository.findAll(), Organisation::from);
   }
 
-  public List<String> findAllTypes(final UUID organisationId) {
-    return recordMapper.mapStringList(repository.findOrgInfraTypes(organisationId));
+  public List<InfrastructureType> findAllTypes(final UUID organisationId) {
+    return recordMapper.mapValues(repository.findOrgInfraTypes(organisationId), InfrastructureType::from);
   }
 
-  public String createOrganisationType(final UUID organisationId, final String type) {
+  public InfrastructureType createOrganisationType(final UUID organisationId, final InfrastructureType type) {
     repository.createOrgInfraType(organisationId, type);
     return type;
   }

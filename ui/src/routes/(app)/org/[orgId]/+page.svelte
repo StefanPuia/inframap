@@ -1,7 +1,7 @@
 <script lang="ts">
   import type {Infrastructure, InfrastructureNode} from "../../../../types";
   import {currentOrganisation, loading} from "../../../../store";
-  import {useQuery} from "@sveltestack/svelte-query";
+  import {useQuery, useQueryClient} from "@sveltestack/svelte-query";
   import {whenSuccessful} from "../../../../utils/QueryUtils";
   import {getInfrastructure, getOrganisation} from "../../../../services/axios";
   import CreateNodeModal from "./CreateNodeModal.svelte";
@@ -10,6 +10,7 @@
 
   export let data;
   const {orgId} = data ?? {};
+  const queryClient = useQueryClient();
   let infrastructure: Infrastructure = {nodes: [], paths: []};
   $loading = true;
   let el;
@@ -19,6 +20,7 @@
       $currentOrganisation = {
         ...organisation, types, tags
       };
+      queryClient.invalidateQueries('infrastructure');
     }));
 
   useQuery(['infrastructure', {orgId}], () => getInfrastructure(orgId))
@@ -26,16 +28,12 @@
       infrastructure = data as any;
       const {nodes, paths} = infrastructure;
 
-      if (el) {
+      if (el && $currentOrganisation) {
         while (el.firstChild) {
           el.removeChild(el.firstChild);
         }
         el.appendChild(ForceGraph<InfrastructureNode>({nodes, links: paths}, {
-          nodeId: d => d.id,
-          nodeTitle: d => d.name,
-          // linkStrokeWidth: l => Math.sqrt(l),
-          width: 600,
-          height: 600
+          types: ($currentOrganisation.types ?? []).reduce((acc, curr) => ({...acc, [curr.name]: curr.image}), {}),
         }))
       }
 
