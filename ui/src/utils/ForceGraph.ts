@@ -11,13 +11,13 @@ type NodeInit = { nodes: InfrastructureNode[], links: Link[] };
 type Options = { types: Record<string, string> }
 
 export function ForceGraph({nodes, links}: NodeInit, {types}: Options) {
-  const imageSize = 64;
+  const imageSize = 48;
 
   const width = window.innerWidth;
   const height = window.innerHeight;
 
   const svg = d3.create("svg")
-    .attr("class", "fixed w-full h-full")
+    .attr("class", "absolute left-0 right-0 h-full z-10")
     .attr("viewBox", `0 0 ${width} ${height}`);
 
   const container = svg.append("g");
@@ -25,8 +25,8 @@ export function ForceGraph({nodes, links}: NodeInit, {types}: Options) {
 
   const simulation = d3.forceSimulation()
     .nodes(nodes as any)
-    .force("charge", d3.forceManyBody().strength(-50))
-    .force("link", d3.forceLink(links).id((d: any) => d.id).distance(imageSize * 3))
+    .force("charge", d3.forceManyBody().strength(0))
+    .force("link", d3.forceLink(links).id((d: any) => d.id).distance(imageSize * 4))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .tick(1)
     .on("tick", ticked);
@@ -42,10 +42,12 @@ export function ForceGraph({nodes, links}: NodeInit, {types}: Options) {
     .data(nodes)
     .enter()
     .append("g")
+    .attr("class", "infrastructure-node cursor-pointer")
+    .attr("data-id", d => d.id)
     .call(drag(simulation) as any);
 
   node.append("title").text(function (d) {
-    return `Type '${d.type}' not found`
+    return types[d.type] ? '' : `Type '${d.type}' not found`;
   });
 
   node
