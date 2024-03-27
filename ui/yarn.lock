@@ -317,10 +317,10 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.24.tgz#8c7688559979f7079aacaf31aa881c3aa410b718"
   integrity sha512-XJfwUVUKDHF5ugKwIcxEgc9k8b7HbznCp6eUfWgu710hMPNIO4aw4/zB5RogDQz8nd6gyCDpU9O/m6qYEWY6yQ==
 
-"@sveltejs/adapter-auto@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-auto/-/adapter-auto-2.1.1.tgz#e055c71bdb8d2923d63db089752675f70ab1a0f3"
-  integrity sha512-nzi6x/7/3Axh5VKQ8Eed3pYxastxoa06Y/bFhWb7h3Nu+nGRVxKAy3+hBJgmPCwWScy8n0TsstZjSVKfyrIHkg==
+"@sveltejs/adapter-auto@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-auto/-/adapter-auto-3.2.0.tgz#00720dfad99f95452c6e47cc64a1cb58324337d2"
+  integrity sha512-She5nKT47kwHE18v9NMe6pbJcvULr82u0V3yZ0ej3n1laWKGgkgdEABE9/ak5iDPs93LqsBkuIo51kkwCLBjJA==
   dependencies:
     import-meta-resolve "^4.0.0"
 
